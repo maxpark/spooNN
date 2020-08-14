@@ -18,15 +18,28 @@ If you haven't done so yet, clone the repo and go to the training directory:
 2. $ export PYTHONPATH=/path/to/spooNN/hls-nn-lib/training:$PYTHONPATH
 3. $ cd spooNN/mnist-cnn/training/
 
-Have a look at the mnist-cnn.py script. The CNN that we will train will be quantized (1-bit weights and 5-bit activations).
+- install tensor pack  
+  https://github.com/fpgasystems/spooNN
+```
+pip install --upgrade git+https://github.com/tensorpack/tensorpack.git
+# or add `--user` to install to user's local directories
+```
+
+Have a look at the mnist-cnn.py script.  
+The CNN that we will train will be quantized (1-bit weights and 5-bit activations).
 
 Start the training:
-- $ python ./mnist-cnn.py 1
-This will take a while. Observe the console output to see how much accuracy is reached on the test set. After 10 epochs, it should be around 98%.
+- $ python ./mnist-cnn.py 1  
+  This will take a while.  
+  Observe the console output to see how much accuracy is reached on the test set.  
+  After 10 epochs, it should be around 98%.
 
 Generate the weights to be used in C and dump them also as a numpy array to weights.npy (replace NAME1 and NAME2 accordingly. NAME1 will be unique, whereas for NAME2 you can select weights from a certain iteration):
-- $ python ./mnist-cnn.py 2 --meta ./train_log/mnist-cnn/NAME1.meta --model ./train_log/mnist-cnn/NAME2.data-00000-of-00001 --output weights.npy
-This operation creates 2 files: mnist-cnn-config.h and mnist-cnn-params.h. The -config.h file contains layer-wise configuration parameters, for example the size of the convolution kernel, stride etc. The -params.h file contains the weights and activation factors as C arrays.
+- $ python ./mnist-cnn.py 2 --meta ./train_log/mnist-cnn/NAME1.meta --model ./train_log/mnist-cnn/NAME2.data-00000-of-00001 --output weights.npy  
+This operation creates 2 files: mnist-cnn-config.h and mnist-cnn-params.h.  
+The -config.h file contains layer-wise configuration parameters,  
+for example the size of the convolution kernel, stride etc.  
+The -params.h file contains the weights and activation factors as C arrays.
 
 Perform inference with the weights you dumped. This is useful when you want to compare intermediate results between Tensorflow and C while debugging. Download the MNIST test file from https://www.csie.ntu.edu.tw/~cjlin/libsvmtools/datasets/multiclass.html#mnist:
 - $ python ./mnist-cnn.py 0 --testfile path/to/mnist.t --weights ./weights.npy
