@@ -10,6 +10,7 @@ This is a repository for FPGA-based neural network inference, that delivered the
 ![picture](DAC_rankings2019.jpg)
 2019: The final rankings are published at http://www.cse.cuhk.edu.hk/~byu/2019-DAC-SDC/index.html
 
+
 ## Repo organization
 - hls-nn-lib: A neural network inference library implemented in C for Vivado High Level Synthesis (HLS).
 - mnist-cnn: helloworld project, showing an end-to-end flow (training, implementation, FPGA deployment) for MNIST handwritted digit classification with a convolutional neural network.
